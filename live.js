@@ -36,12 +36,12 @@
 
     // performs a cycle per interval
     heartbeat: function (flag) {      
-      if (document.body) {        
-        // make sure all resources are loaded on first activation
-        if (!loaded) Live.loadresources();
-        Live.checkForChanges();
-      }
       if (flag) {
+        if (document.body) {        
+          // make sure all resources are loaded on first activation
+          if (!loaded) Live.loadresources();
+          Live.checkForChanges();
+        }
         timeId = setTimeout(Live.heartbeat, interval, [true]);
       } else if (timeId) {
         clearTimeout(timeId);
@@ -144,6 +144,7 @@
 
     // act upon a changed url of certain content type
     refreshResource: function (url, type) {
+      if (!type) return;
       switch (type.toLowerCase()) {
         // css files can be reloaded dynamically by replacing the link element                               
         case "text/css":
